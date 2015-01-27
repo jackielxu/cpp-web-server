@@ -99,3 +99,47 @@ void HangmanWidget::registerGuess(char c)
         scoreUpdated_.emit(20 - badGuesses_);
     }
 }
+
+
+ImagesWidget::ImagesWidget(int maxGuesses, WContainerWidget *parent)
+    : WContainerWidget(parent)
+{
+    for (int i = 0; i <= maxGuesses; ++i) {
+        std::string fname = "icons/hangman";
+        fname += boost::lexical_cast<std::string>(i) + ".png";
+        WImage *theImage = new WImage(fname, this);
+        images_.push_back(theImage);
+
+        theImage->hide();
+    }
+
+    WImage *hurray = new WImage("icons/hangmanhurray.jpg", this);
+    hurray->hide();
+    images_.push_back(hurray);
+
+    showImage(HURRAY);
+}
+
+void ImagesWidget::showImage(int index)
+{
+    image(index)->hide();
+    image_ = index;
+    image(index)->show();
+}
+
+WImage *ImagesWidget::image(int index) const
+{
+    return index == HURRAY ? images_.back() : images_[index];
+}
+
+void HangmanGame::handleInternalPath(const std::string &internalPath)
+{
+    if (session_.login().loggedIn()) {
+        if (internalPath == "/play")
+            showGame();
+        else if (internalPath == "/highscores")
+            showHighScores();
+        else
+            WApplication::instance()->setInternalPath("/play",  true);
+    }
+}
