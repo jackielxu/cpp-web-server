@@ -12,31 +12,40 @@ public:
     HelloApplication(const Wt::WEnvironment& env);
 
 private:
-    Wt::WLineEdit *nameEdit_;
-    Wt::WText *greeting_;
+    Wt::WLineEdit *blogEdit_;
+    Wt::WText *post_;
 
     void greet();
+	void enter();
 };
 
 HelloApplication::HelloApplication(const Wt::WEnvironment& env)
     : Wt::WApplication(env)
 {
-    setTitle("Hello world");
-    Wt::WText *title = new Wt::WText("<h1>A Witty blog: Hangman</h1>");
+    setTitle("Coo Coo Ka Shoo");
+    Wt::WText *title = new Wt::WText("<h1>A Witty Blog: The Daily Xu</h1>");
     root()->addWidget(title);
 
-    root()->addWidget(new Wt::WText("Your name, please?"));
-    nameEdit_ = new Wt::WLineEdit(root());
-    Wt::WPushButton *button = new Wt::WPushButton("Greet me.", root());
+    root()->addWidget(new Wt::WText("Blog Post: "));
+    blogEdit_ = new Wt::WLineEdit(root());
+    Wt::WPushButton *button = new Wt::WPushButton("Enter post.", root());
     root()->addWidget(new Wt::WBreak());
-    greeting_ = new Wt::WText(root());
-    button->clicked().connect(this, &HelloApplication::greet);
+    post_ = new Wt::WText(root());
+    button->clicked().connect(this, &HelloApplication::enter);
+  	blogEdit_->enterPressed().connect(this, &HelloApplication::enter);
 }
 
 void HelloApplication::greet()
 {
-    greeting_->setText("Hello there, " + nameEdit_->text());
+    post_->setText(blogEdit_->text());
 }
+
+void HelloApplication::enter()
+{ 
+    root()->addWidget(new Wt::WBreak());
+    post_ = new Wt::WText(root());
+    post_->setText(blogEdit_->text()); 
+}	
 
 Wt::WApplication *createApplication(const Wt::WEnvironment& env)
 {
