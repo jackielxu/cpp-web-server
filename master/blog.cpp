@@ -24,8 +24,7 @@ class HelloApplication : public Wt::WApplication
 		Wt::WText *post_;
 		Wt::WTextArea *bodyEdit_;
 		Wt::WText *bodyPost_;
-		Wt::WText *timestamp_;
-
+		Wt::WText *timestamp_; 
 
 		void greet();
 		void enter();
@@ -93,8 +92,8 @@ void HelloApplication::enter()
 	root()->addWidget(new Wt::WBreak());
 	root()->addWidget(new Wt::WBreak());
 
-	blogEdit_->setText("New title");
-	bodyEdit_->setText("New body");
+	blogEdit_->setText("");
+	bodyEdit_->setText("");
 
 }	
 
