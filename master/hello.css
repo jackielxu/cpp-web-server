@@ -6,9 +6,8 @@ h1 {
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
-	position: absolute;
 }
 
 .timestamp {
-	font-size: smaller;
+	font-size: 12px;
 }

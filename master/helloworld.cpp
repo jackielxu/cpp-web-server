@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <time.h>
 #include <Wt/WApplication>
 #include <Wt/WBreak>
 #include <Wt/WContainerWidget>
@@ -21,6 +23,8 @@ class HelloApplication : public Wt::WApplication
 		Wt::WText *post_;
 		Wt::WTextArea *bodyEdit_;
 		Wt::WText *bodyPost_;
+		Wt::WText *timestamp_;
+
 
 		void greet();
 		void enter();
@@ -69,13 +73,24 @@ void HelloApplication::enter()
 	root()->addWidget(new Wt::WBreak());
 	post_ = new Wt::WText(root());
 	post_->setText(bodyEdit_->text());
+
+	// Timestamp
+	root()->addWidget(new Wt::WBreak());
+    timestamp_ = new Wt::WText(root());
+    timestamp_->addStyleClass("timestamp");
+    std::time_t time = std::time(nullptr);
+    std::string time_str;
+    time_str.append("( ");
+    time_str.append(std::asctime(std::localtime(&time)));
+    time_str.append(")");
+    timestamp_->setText(time_str);
+
+
 	root()->addWidget(new Wt::WBreak());
 	root()->addWidget(new Wt::WBreak());
 
 	blogEdit_->setText("New title");
 	bodyEdit_->setText("New body");
-
-
 
 }	
 
