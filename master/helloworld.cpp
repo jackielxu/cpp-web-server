@@ -12,18 +12,18 @@
 
 class HelloApplication : public Wt::WApplication
 {
-public:
-    HelloApplication(const Wt::WEnvironment& env);
+	public:
+		HelloApplication(const Wt::WEnvironment& env);
 
-private:
-    Wt::WLineEdit *blogEdit_;
-	Wt::WText *title_;
-    Wt::WText *post_;
-	Wt::WTextArea *bodyEdit_;
-	Wt::WText *bodyPost_;
+	private:
+		Wt::WLineEdit *blogEdit_;
+		Wt::WText *title_;
+		Wt::WText *post_;
+		Wt::WTextArea *bodyEdit_;
+		Wt::WText *bodyPost_;
 
-    void greet();
-	void enter();
+		void greet();
+		void enter();
 };
 
 HelloApplication::HelloApplication(const Wt::WEnvironment& env)
