@@ -1,3 +1,15 @@
+#include <Wt/WApplication>
+#include <Wt/WBreak>
+#include <Wt/WContainerWidget>
+#include <Wt/WLineEdit>
+#include <Wt/WPushButton>
+#include <Wt/WText>
+#include <Wt/WComboBox>
+//#include <Wt/ImagesWidget>
+//#include <Wt/LettersWidget>
+using namespace Wt;
+using namespace std;
+
 class HangmanWidget : public Wt::WContainerWidget
 {
 public:
@@ -24,7 +36,7 @@ private:
     void newGame();
 };
 
-using namespace Wt;
+
 
 HangmanWidget::HangmanWidget(const std::string &name, WContainerWidget *parent)
     : WContainerWidget(parent),
