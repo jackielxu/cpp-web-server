@@ -15,6 +15,7 @@ class HelloApplication : public Wt::WApplication
 		HelloApplication(const Wt::WEnvironment& env);
 
 	private:
+		Wt::WText *opening_text_;
 		Wt::WLineEdit *blogEdit_;
 		Wt::WText *title_;
 		Wt::WText *post_;
@@ -32,7 +33,11 @@ HelloApplication::HelloApplication(const Wt::WEnvironment& env)
     Wt::WText *title = new Wt::WText("<h1>A Witty Blog: The Daily Xu</h1>");
     root()->addWidget(title);
 
-    root()->addWidget(new Wt::WText("Blog Title: "));
+	opening_text_ = new Wt::WText("Make a new blog post!");
+
+    root()->addWidget(opening_text_);
+	opening_text_->addStyleClass("post");
+
     root()->addWidget(new Wt::WBreak());
     blogEdit_ = new Wt::WLineEdit(root());
 	blogEdit_->addStyleClass("post");
@@ -41,7 +46,7 @@ HelloApplication::HelloApplication(const Wt::WEnvironment& env)
 	bodyEdit_ = new Wt::WTextArea(root());
 	bodyEdit_->setColumns(80);
 	bodyEdit_->setRows(5);
-	bodyEdit_->setText("Enter body of post!");
+	bodyEdit_->setText("");
 	bodyEdit_->addStyleClass("post");
 
 	root()->addWidget(new Wt::WBreak());
