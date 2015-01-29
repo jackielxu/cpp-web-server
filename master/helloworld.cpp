@@ -25,8 +25,7 @@ HelloApplication::HelloApplication(const Wt::WEnvironment& env)
     Wt::WText *title = new Wt::WText("<h1>A Witty blog: Hangman</h1>");
     root()->addWidget(title);
 
-
-    root()->addWidget(new Wt::WText("Your name, please ? "));
+    root()->addWidget(new Wt::WText("Your name, please?"));
     nameEdit_ = new Wt::WLineEdit(root());
     Wt::WPushButton *button = new Wt::WPushButton("Greet me.", root());
     root()->addWidget(new Wt::WBreak());
