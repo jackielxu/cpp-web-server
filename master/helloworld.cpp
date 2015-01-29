@@ -4,6 +4,7 @@
 #include <Wt/WLineEdit>
 #include <Wt/WPushButton>
 #include <Wt/WText>
+#include <Wt/WCssDecorationStyle>
 
 class HelloApplication : public Wt::WApplication
 {
@@ -21,8 +22,10 @@ HelloApplication::HelloApplication(const Wt::WEnvironment& env)
     : Wt::WApplication(env)
 {
     setTitle("Hello world");
+    Wt::WText *title = new Wt::WText("<h1>A Witty blog: Hangman</h1>");
+    root()->addWidget(title);
 
-    root()->addWidget(new Wt::WText("Your name, please ? "));
+    root()->addWidget(new Wt::WText("Your name, please?"));
     nameEdit_ = new Wt::WLineEdit(root());
     Wt::WPushButton *button = new Wt::WPushButton("Greet me.", root());
     root()->addWidget(new Wt::WBreak());
@@ -37,7 +40,10 @@ void HelloApplication::greet()
 
 Wt::WApplication *createApplication(const Wt::WEnvironment& env)
 {
-    return new HelloApplication(env);
+    Wt::WApplication *app = new HelloApplication(env);
+  
+    app->useStyleSheet("hello.css");
+    return app;
 }
 
 int main(int argc, char **argv)
