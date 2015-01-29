@@ -9,6 +9,7 @@
 #include <Wt/WTextArea>
 #include <Wt/WDateTime>
 
+
 class HelloApplication : public Wt::WApplication
 {
 public:
@@ -73,6 +74,9 @@ void HelloApplication::enter()
 
 	blogEdit_->setText("New title");
 	bodyEdit_->setText("New body");
+
+
+
 }	
 
 Wt::WApplication *createApplication(const Wt::WEnvironment& env)
