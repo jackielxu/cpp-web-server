@@ -1,61 +1,83 @@
 // to run:  
 // g++ testblog.cpp -o testblog -I/usr/local/include -L/usr/local/lib -lwthttp -lwt -lboost_random -lboost_regex -lboost_signals -lboost_system -lboost_filesystem -lboost_program_options -lboost_date_time 
 
-
 #include <Wt/WApplication>
 #include <Wt/WBreak>
 #include <Wt/WContainerWidget>
+#include <Wt/WLineEdit>
 #include <Wt/WPushButton>
 #include <Wt/WText>
-#include <Wt/WLineEdit>
-#include <Wt/WTextEdit>
-#include <Wt/WTextArea>
-#include <Wt/WDateTime>
-#include <Wt/Utils>
+#include <Wt/WCssDecorationStyle>
+#include <time.h>
+#include <stdio.h>
 
-using namespace Wt;
-using namespace std;
 
-class MyApplication : public WApplication {
-	public:
-		MyApplication(const WEnvironment& env);
-	private:
-		WLineEdit *post_title_;
-		WTextEdit *post_entry_;
-		WText *title_;
-		WText *entry_;
+class HelloApplication : public Wt::WApplication
+{
+public:
+    HelloApplication(const Wt::WEnvironment& env);
 
-		void post();
+private:
+    Wt::WLineEdit *blogEdit_;
+    Wt::WText *post_;
+    Wt::WText *timestamp_;
+
+    void greet();
+	void enter();
 };
 
-MyApplication::MyApplication(const WEnvironment& env)
-	: WApplication(env) 
+HelloApplication::HelloApplication(const Wt::WEnvironment& env)
+    : Wt::WApplication(env)
 {
-	setTitle("Dear Diary");
-	root()->addWidget(new WText("Title: "));
-	post_title_ = new WLineEdit(root());
-	
-	 // Text box for blog entries
-	 root()->addWidget(new WBreak());
-	 WTextEdit *post_entry_ = new WTextEdit("");
-	 root()->addWidget(post_entry_);
+    setTitle("Coo Coo Ka Shoo");
+    Wt::WText *title = new Wt::WText("<h1>A Witty Blog: The Daily Xu</h1>");
+    root()->addWidget(title);
 
-	root()->addWidget(new WBreak());
-	WPushButton *button = new WPushButton("Post", root());
-	root()->addWidget(new WBreak());
-	title_ = new WText(root());
-	button->clicked().connect(this, &MyApplication::post);
+    root()->addWidget(new Wt::WText("Blog Post: "));
+    blogEdit_ = new Wt::WLineEdit(root());
 
+
+    Wt::WPushButton *button = new Wt::WPushButton("Enter post.", root());
+    root()->addWidget(new Wt::WBreak());
+    post_ = new Wt::WText(root());
+    button->clicked().connect(this, &HelloApplication::enter);
+  	blogEdit_->enterPressed().connect(this, &HelloApplication::enter);
 }
 
-void MyApplication::post() {
-	title_->setText(post_title_->text());
+void HelloApplication::greet()
+{
+    post_->setText(blogEdit_->text());
 }
 
-WApplication *createApplication(const WEnvironment& env) {
-	return new MyApplication(env);
+void HelloApplication::enter()
+{ 
+    root()->addWidget(new Wt::WBreak());
+    post_ = new Wt::WText(root());
+    post_->setText(blogEdit_->text()); 
+    root()->addWidget(new Wt::WBreak());
+
+    // Timestamp
+    timestamp_ = new Wt::WText(root());
+    std::time_t time = std::time(nullptr);
+    std::string time_str;
+    time_str.append("( ");
+    time_str.append(std::asctime(std::localtime(&time)));
+    time_str.append(")");
+    timestamp_->setText(time_str);
+
+}	
+
+Wt::WApplication *createApplication(const Wt::WEnvironment& env)
+{
+    Wt::WApplication *app = new HelloApplication(env);
+  
+    app->useStyleSheet("hello.css");
+    return app;
 }
 
-int main(int argc, char **argv) {
-	return WRun(argc, argv, &createApplication);
-}
+int main(int argc, char **argv)
+{
+    return Wt::WRun(argc, argv, &createApplication);
+} 
+
+
