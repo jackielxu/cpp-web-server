@@ -1,11 +1,9 @@
-// to run:  
-// g++ testblog.cpp -o testblog -I/usr/local/include -L/usr/local/lib -lwthttp -lwt -lboost_random -lboost_regex -lboost_signals -lboost_system -lboost_filesystem -lboost_program_options -lboost_date_time 
-
-
 #include <Wt/WApplication>
 #include <Wt/WBreak>
 #include <Wt/WContainerWidget>
+//#include <Wt/WEnvironment>
 #include <Wt/WPushButton>
+//#include <Wt/WServer>
 #include <Wt/WText>
 #include <Wt/WLineEdit>
 #include <Wt/WTextEdit>
@@ -20,6 +18,7 @@ class MyApplication : public WApplication {
 	public:
 		MyApplication(const WEnvironment& env);
 	private:
+		//something
 		WLineEdit *post_title_;
 		WTextEdit *post_entry_;
 		WText *title_;
@@ -32,24 +31,49 @@ MyApplication::MyApplication(const WEnvironment& env)
 	: WApplication(env) 
 {
 	setTitle("Dear Diary");
+
 	root()->addWidget(new WText("Title: "));
 	post_title_ = new WLineEdit(root());
+	//int post_title->textSize() = 20; 			// trying to incr text size
 	
-	 // Text box for blog entries
+	// // Text box for blog entries
 	 root()->addWidget(new WBreak());
-	 WTextEdit *post_entry_ = new WTextEdit("");
-	 root()->addWidget(post_entry_);
+	 WContainerWidget *container = new WContainerWidget();
+	 WTextArea *post_entry_ = new WTextArea(container);
+	 post_entry_->setColumns(80);
+	 post_entry_->setRows(5);
+	 post_entry_->setText("Write here...");
+	 //WTextEdit *post_entry_ = new WTextEdit(container);
+	// post_entry_->setHeight(300);
 
 	root()->addWidget(new WBreak());
-	WPushButton *button = new WPushButton("Post", root());
+	WPushButton *button = new WPushButton("Post Title", root());
+	// WPushButton *button2 = new WPushButton("Post Entry", container);
+	// button2->setMargin(10, Top|Bottom);
+
+	 WText *out = new WText("<p></p>", container);
+	 out->addStyleClass("help-block");
+
 	root()->addWidget(new WBreak());
 	title_ = new WText(root());
+	// entry_ = new WText(container);
 	button->clicked().connect(this, &MyApplication::post);
+	// post_entry_->changed().connect(bind([=] () {
+	//     out->setText("<p>Text area changed at " +
+	//          WDateTime::currentDateTime().toString() + ".</p>");
+	// }));
+
+
+	// button->clicked().connect(bind([=] () {
+	// 	out->setText("<pre>" + Utils::htmlEncode(post_entry_->text()) + "</pre>");
+	// }));
 
 }
 
+
 void MyApplication::post() {
 	title_->setText(post_title_->text());
+	entry_->setText(post_entry_->text());
 }
 
 WApplication *createApplication(const WEnvironment& env) {
