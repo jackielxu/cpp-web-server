@@ -39,7 +39,7 @@ BlogApp::BlogApp(const Wt::WEnvironment& env)
 	opening_text_ = new Wt::WText("Make a new blog post!");
 
     root()->addWidget(opening_text_);
-	opening_text_->addStyleClass("post");
+	opening_text_->addStyleClass("query-words");
 
     root()->addWidget(new Wt::WBreak());
     blogEdit_ = new Wt::WLineEdit(root());
