@@ -1,5 +1,5 @@
 # cpp-web-server
-Web server in C++! This was built using Wt, a library for creating C++ web applications. The web server is made entirely in C++ and generates the related HTML and JS to support viewing on broswer. '
+Web server in C++! This was built using Wt, a library for creating C++ web applications. The web server is made entirely in C++ and generates the related HTML and JS to support viewing on broswer.
 
 ### Requirements
 * Wt (along with cmake and make)
