@@ -11,11 +11,10 @@
 #include <Wt/WTextArea>
 #include <Wt/WDateTime>
 
-
-class HelloApplication : public Wt::WApplication
+class BlogApp : public Wt::WApplication
 {
 	public:
-		HelloApplication(const Wt::WEnvironment& env);
+		BlogApp(const Wt::WEnvironment& env);
 
 	private:
 		Wt::WText *opening_text_;
@@ -24,13 +23,13 @@ class HelloApplication : public Wt::WApplication
 		Wt::WText *post_;
 		Wt::WTextArea *bodyEdit_;
 		Wt::WText *bodyPost_;
-		Wt::WText *timestamp_; 
+		Wt::WText *timestamp_;
 
 		void greet();
 		void enter();
 };
 
-HelloApplication::HelloApplication(const Wt::WEnvironment& env)
+BlogApp::BlogApp(const Wt::WEnvironment& env)
     : Wt::WApplication(env)
 {
     setTitle("Coo Coo Ka Shoo");
@@ -56,24 +55,47 @@ HelloApplication::HelloApplication(const Wt::WEnvironment& env)
 	root()->addWidget(new Wt::WBreak());
     Wt::WPushButton *button = new Wt::WPushButton("Enter post.", root());
 	button->addStyleClass("post");
-	
+
     root()->addWidget(new Wt::WBreak());
 
     post_ = new Wt::WText(root());
-    button->clicked().connect(this, &HelloApplication::enter);
-  	blogEdit_->enterPressed().connect(this, &HelloApplication::enter);
+    button->clicked().connect(this, &BlogApp::enter);
+	blogEdit_->enterPressed().connect(this, &BlogApp::enter);
 }
 
-void HelloApplication::greet()
+void BlogApp::greet()
 {
+    root()->addWidget(new Wt::WBreak());
+    title_ = new Wt::WText(root());
+    title_->setText(blogEdit_->text());
+	root()->addWidget(new Wt::WBreak());
+
+	post_ = new Wt::WText(root());
+	post_->setText(bodyEdit_->text());
+
+	root()->addWidget(new Wt::WBreak());
+    timestamp_ = new Wt::WText(root());
+    timestamp_->addStyleClass("timestamp");
+
+    std::time_t time = std::time(nullptr);
+    std::string time_str;
+
+    time_str.append("( ");
+    time_str.append(std::asctime(std::localtime(&time)));
+    time_str.append(")");
+    timestamp_->setText(time_str);
+
     post_->setText(blogEdit_->text());
 }
 
-void HelloApplication::enter()
-{ 
+/*
+ * Posts blog post on page, appending to list of blog posts.
+ */
+void BlogApp::enter()
+{
     root()->addWidget(new Wt::WBreak());
     title_ = new Wt::WText(root());
-    title_->setText(blogEdit_->text()); 
+    title_->setText(blogEdit_->text());
 	root()->addWidget(new Wt::WBreak());
 	post_ = new Wt::WText(root());
 	post_->setText(bodyEdit_->text());
@@ -87,25 +109,24 @@ void HelloApplication::enter()
     time_str.append("( ");
     time_str.append(std::asctime(std::localtime(&time)));
     time_str.append(")");
-    timestamp_->setText(time_str); 
+    timestamp_->setText(time_str);
 
 	root()->addWidget(new Wt::WBreak());
 	root()->addWidget(new Wt::WBreak());
 
 	blogEdit_->setText("");
-	bodyEdit_->setText("");
-
-}	
+	bodyEdit_->setText(""); 
+}
 
 Wt::WApplication *createApplication(const Wt::WEnvironment& env)
 {
-    Wt::WApplication *app = new HelloApplication(env);
-  
-    app->useStyleSheet("hello.css");
+    Wt::WApplication *app = new BlogApp(env);
+
+    app->useStyleSheet("blog.css");
     return app;
 }
 
 int main(int argc, char **argv)
 {
     return Wt::WRun(argc, argv, &createApplication);
-} 
+}
