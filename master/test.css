@@ -1,0 +1,75 @@
+html, body {
+	background: url(background2.jpg) no-repeat center center fixed;
+	color: white;
+}
+
+.Wt-domRoot {
+	text-align: center;
+}
+
+h1 {
+	text-align: center;
+	border-style: solid;
+	border-width: 5px;
+}
+
+.shorter-post {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	color: black; 
+}
+
+.post {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	color: black;
+	width: 500px;
+}
+
+.query-words {
+	font-weight: bold;
+}
+
+.timestamp {
+	font-size: 12px;
+	font-style: italic;
+}
+
+.title {
+	font-size: 30px;
+	font-weight: bold;
+}
+
+.red {
+	color: red;
+}
+
+.orange {
+	color: orange;
+}
+
+.yellow {
+	color: black;
+}
+
+.black {
+	color: yellow;
+}
+
+.green {
+	color: green;
+}
+
+.blue {
+	color: blue;
+}
+
+.violet {
+	color: violet;
+}
+
+.white {
+	color: white;
+}

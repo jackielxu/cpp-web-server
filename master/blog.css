@@ -28,5 +28,6 @@ h1 {
 }
 
 .blogpost {
-	color: #C0C0C0;
+	/* color: #C0C0C0; */
+	color: black;
 }
