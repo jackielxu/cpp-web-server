@@ -68,6 +68,7 @@ void BlogApp::greet()
     root()->addWidget(new Wt::WBreak());
     title_ = new Wt::WText(root());
     title_->setText(blogEdit_->text());
+    title_->addStyleClass("title");
 	root()->addWidget(new Wt::WBreak());
 
 	post_ = new Wt::WText(root());
@@ -96,6 +97,7 @@ void BlogApp::enter()
     root()->addWidget(new Wt::WBreak());
     title_ = new Wt::WText(root());
     title_->setText(blogEdit_->text());
+    title_->addStyleClass("title");
 	root()->addWidget(new Wt::WBreak());
 	post_ = new Wt::WText(root());
 	post_->setText(bodyEdit_->text());
