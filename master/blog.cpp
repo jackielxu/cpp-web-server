@@ -101,7 +101,7 @@ Wt::WApplication *createApplication(const Wt::WEnvironment& env)
 {
     Wt::WApplication *app = new HelloApplication(env);
   
-    app->useStyleSheet("hello.css");
+    app->useStyleSheet("blog.css");
     return app;
 }
 
