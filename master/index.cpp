@@ -53,10 +53,10 @@ BlogApp::BlogApp(const Wt::WEnvironment& env)
     Wt::WText *title = new Wt::WText("<h1>A Witty Blog: The Daily Xu</h1>");
     root()->addWidget(title);
 
-	opening_text_ = new Wt::WText("Welcome to your blog to be.\nto the new napping position you have mastered without hurting your neck,");
+	opening_text_ = new Wt::WText("Welcome to your blog to be.");
 	opening_text2_ = new Wt::WText("Share your daily happenings and life musings, from the new tricks in C/C++ that you are learning,");
-	opening_text3_ = new Wt::WText("to the new napping position you have mastered without hurting your neck,"); 
-	opening_text4_ = new Wt::WText("to all of your deepest, darkest secrets which only the people standing behind you will find out about.");
+	opening_text3_ = new Wt::WText("to the new napping positions you have mastered without hurting your neck,"); 
+	opening_text4_ = new Wt::WText("to all of your deepest, darkest secrets that only the people standing behind you will find out about.");
 	opening_text5_ = new Wt::WText("Start a post and write on!");
 
     root()->addWidget(opening_text_);
