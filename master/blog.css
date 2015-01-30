@@ -17,4 +17,10 @@ h1 {
 
 .timestamp {
 	font-size: 12px;
+	font-style: italic;
+}
+
+.title {
+	font-size: 30px;
+	font-weight: bold;
 }
