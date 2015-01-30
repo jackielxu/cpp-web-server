@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <time.h>
+#include <cstdlib>
 #include <Wt/WApplication>
 #include <Wt/WBreak>
 #include <Wt/WContainerWidget>
@@ -10,6 +11,12 @@
 #include <Wt/WText>
 #include <Wt/WTextArea>
 #include <Wt/WDateTime>
+
+static const char alphanum[] =
+"0123456789"
+"!@#$%^&*"
+"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+"abcdefghijklmnopqrstuvwxyz";
 
 class BlogApp : public Wt::WApplication
 {
@@ -26,7 +33,9 @@ class BlogApp : public Wt::WApplication
 		Wt::WText *timestamp_;
 
 		void greet();
+		void randomness();
 		void enter();
+		void timestamp();
 };
 
 BlogApp::BlogApp(const Wt::WEnvironment& env)
@@ -54,13 +63,54 @@ BlogApp::BlogApp(const Wt::WEnvironment& env)
 
 	root()->addWidget(new Wt::WBreak());
     Wt::WPushButton *button = new Wt::WPushButton("Enter post.", root());
+	Wt::WPushButton *random_button = new Wt::WPushButton("Generate complete random text!", root());
 	button->addStyleClass("post");
+	random_button->addStyleClass("post");
 
     root()->addWidget(new Wt::WBreak());
 
-    post_ = new Wt::WText(root());
     button->clicked().connect(this, &BlogApp::enter);
+	random_button->clicked().connect(this, &BlogApp::randomness);
 	blogEdit_->enterPressed().connect(this, &BlogApp::enter);
+}
+
+void BlogApp::randomness() {
+	std::string title, body;
+	
+	for (int i = 0; i < 10; i++)
+		title += alphanum[rand() % (sizeof(alphanum) - 1)];
+	for (int j = 0; j < 100; j++)
+		body += alphanum[rand() % (sizeof(alphanum) - 1)];
+
+	root()->addWidget(new Wt::WBreak());
+    title_ = new Wt::WText(root());
+    title_->setText(title);
+    title_->addStyleClass("title");
+	root()->addWidget(new Wt::WBreak());
+	post_ = new Wt::WText(root());
+	post_->setText(body);
+
+	timestamp();
+
+	root()->addWidget(new Wt::WBreak());
+	root()->addWidget(new Wt::WBreak());
+
+	blogEdit_->setText("");
+	bodyEdit_->setText(""); 
+
+}
+
+void BlogApp::timestamp() {
+
+	root()->addWidget(new Wt::WBreak());
+    timestamp_ = new Wt::WText(root());
+    timestamp_->addStyleClass("timestamp");
+    std::time_t time = std::time(nullptr);
+    std::string time_str;
+    time_str.append("( ");
+    time_str.append(std::asctime(std::localtime(&time)));
+    time_str.append(")");
+    timestamp_->setText(time_str); 
 }
 
 void BlogApp::greet()
@@ -73,19 +123,7 @@ void BlogApp::greet()
 
 	post_ = new Wt::WText(root());
 	post_->setText(bodyEdit_->text());
-
-	root()->addWidget(new Wt::WBreak());
-    timestamp_ = new Wt::WText(root());
-    timestamp_->addStyleClass("timestamp");
-
-    std::time_t time = std::time(nullptr);
-    std::string time_str;
-
-    time_str.append("( ");
-    time_str.append(std::asctime(std::localtime(&time)));
-    time_str.append(")");
-    timestamp_->setText(time_str);
-
+	timestamp();
     post_->setText(blogEdit_->text());
 }
 
@@ -94,6 +132,11 @@ void BlogApp::greet()
  */
 void BlogApp::enter()
 {
+	if (blogEdit_->text().empty() && bodyEdit_->text().empty()) {
+		bodyEdit_->setText("");
+		return;
+	}
+
     root()->addWidget(new Wt::WBreak());
     title_ = new Wt::WText(root());
     title_->setText(blogEdit_->text());
@@ -101,17 +144,8 @@ void BlogApp::enter()
 	root()->addWidget(new Wt::WBreak());
 	post_ = new Wt::WText(root());
 	post_->setText(bodyEdit_->text());
-
-	// Timestamp
-	root()->addWidget(new Wt::WBreak());
-    timestamp_ = new Wt::WText(root());
-    timestamp_->addStyleClass("timestamp");
-    std::time_t time = std::time(nullptr);
-    std::string time_str;
-    time_str.append("( ");
-    time_str.append(std::asctime(std::localtime(&time)));
-    time_str.append(")");
-    timestamp_->setText(time_str);
+	
+	timestamp();
 
 	root()->addWidget(new Wt::WBreak());
 	root()->addWidget(new Wt::WBreak());
