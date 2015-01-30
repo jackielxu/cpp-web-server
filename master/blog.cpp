@@ -28,6 +28,7 @@ class BlogApp : public Wt::WApplication
 		Wt::WLineEdit *blogEdit_;
 		Wt::WText *title_;
 		Wt::WText *post_;
+		Wt::WText *intro_;
 		Wt::WTextArea *bodyEdit_;
 		Wt::WText *bodyPost_;
 		Wt::WText *timestamp_;
@@ -45,6 +46,11 @@ BlogApp::BlogApp(const Wt::WEnvironment& env)
     Wt::WText *title = new Wt::WText("<h1>A Witty Blog: The Daily Xu</h1>");
     root()->addWidget(title);
 
+    intro_ = new Wt::WText("Welcome to your blog to be. Share your daily happenings and life musings\
+    	, from the new tricks in C/C++ that you are learning, to the new napping postiion you have mastered\
+    	without hurting your neck, to all of your deepest darkest secrets which \
+    	only the people standing behind you will find out about. Start a post and write on!");
+    opening_text_->addStyleClass("blogpost");
 	opening_text_ = new Wt::WText("Make a new blog post!");
 
     root()->addWidget(opening_text_);
@@ -144,6 +150,7 @@ void BlogApp::enter()
 	root()->addWidget(new Wt::WBreak());
 	post_ = new Wt::WText(root());
 	post_->setText(bodyEdit_->text());
+	post_->addStyleClass("blogpost");
 	
 	timestamp();
 
